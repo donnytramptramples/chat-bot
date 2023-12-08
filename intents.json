@@ -1,233 +1,124 @@
 {
   "intents": [
     {
-      "tag": "greeting",
+      "tag": "technology",
       "patterns": [
-        "Hi",
-        "Hey",
-        "How are you",
-        "Is anyone there?",
-        "Hello",
-        "Good day"
+        "What's the latest technology news?",
+        "Tell me about a new gadget",
+        "Do you know about artificial intelligence?",
+        "What's the future of technology?"
       ],
       "responses": [
-        "Hey :-)",
-        "Hello, thanks for visiting",
-        "Hi there, what can I do for you?",
-        "Hi there, how can I help?"
+        "I don't have access to real-time news, but you can check technology news websites for the latest updates.",
+        "There are many new gadgets being developed all the time. One example is smartwatches, which combine fitness tracking and smartphone features.",
+        "Artificial intelligence, or AI, is a field of computer science focused on creating intelligent machines that can perform tasks that normally require human intelligence.",
+        "The future of technology is exciting and constantly evolving. It includes advancements in areas like AI, virtual reality, robotics, and more."
       ]
     },
     {
-      "tag": "goodbye",
+      "tag": "programming_tools",
       "patterns": [
-        "Goodbye",
-        "See you later",
-        "Bye",
-        "Nice chatting with you",
-        "Till next time"
+        "What IDEs do you recommend?",
+        "Tell me about Visual Studio Code",
+        "Do you use Git?",
+        "Share some code editing tips"
       ],
       "responses": [
-        "Goodbye!",
-        "See you later, have a great day!",
-        "Bye! Take care.",
-        "Until we meet again!"
+        "Popular IDEs include Visual Studio Code, PyCharm, and Atom. Choose one that fits your workflow and language.",
+        "Visual Studio Code is a versatile code editor with a wide range of extensions. It's widely used for web development and more.",
+        "Git is a version control system used by developers to track changes in their code. It's essential for collaborative coding projects.",
+        "Consider using keyboard shortcuts and extensions to boost your productivity while coding."
       ]
     },
     {
-      "tag": "thanks",
+      "tag": "web_development",
       "patterns": [
-        "Thanks",
-        "Thank you",
-        "Appreciate it",
-        "Thanks for your help"
+        "Tell me about web development",
+        "What are the basics of HTML?",
+        "Explain CSS",
+        "What is JavaScript used for?"
       ],
       "responses": [
-        "You're welcome!",
-        "No problem, happy to help!",
-        "Glad I could assist you.",
-        "You're welcome! Let me know if there's anything else I can do for you."
+        "Web development involves building and maintaining websites. It includes front-end (what users see) and back-end (server-side) development.",
+        "HTML (Hypertext Markup Language) is used for structuring content on the web. It defines the structure of your web content using elements.",
+        "CSS (Cascading Style Sheets) is used for styling HTML elements. It controls the layout and appearance of your web pages.",
+        "JavaScript is a programming language that adds interactivity to your website. It can manipulate the content, handle events, and more."
       ]
     },
     {
-      "tag": "name",
+      "tag": "machine_learning",
       "patterns": [
-        "What's your name?",
-        "What should I call you?",
-        "Do you have a name?",
-        "May I know your name?"
+        "Tell me about machine learning",
+        "What is a neural network?",
+        "Explain supervised learning",
+        "What's the role of TensorFlow?"
       ],
       "responses": [
-        "I'm an AI language model called Vergil.",
-        "I'm caleld Vergil.",
-        "I'm Vergil, nice to meet you!"
+        "Machine learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed.",
+        "A neural network is a computational model inspired by the human brain. It's used in machine learning for pattern recognition and decision-making.",
+        "Supervised learning involves training a model on a labeled dataset, where the algorithm learns from input-output pairs.",
+        "TensorFlow is an open-source machine learning framework developed by Google. It simplifies the development and deployment of machine learning models."
       ]
     },
     {
-      "tag": "help",
+      "tag": "cybersecurity",
       "patterns": [
-        "Can you help me?",
-        "I need assistance",
-        "Please help",
-        "What can you do?"
+        "What is cybersecurity?",
+        "How can I secure my computer?",
+        "Tell me about encryption",
+        "Explain two-factor authentication"
       ],
       "responses": [
-        "Of course! I'm here to help.",
-        "Sure, I'll do my best to assist you.",
-        "I'm here to help. What do you need assistance with?"
+        "Cybersecurity is the practice of protecting computer systems, networks, and data from theft, damage, or unauthorized access.",
+        "Ensure your computer is updated with the latest security patches, use strong and unique passwords, and install reliable antivirus software.",
+        "Encryption is the process of converting information into a code to prevent unauthorized access. It's crucial for securing sensitive data.",
+        "Two-factor authentication adds an extra layer of security by requiring users to provide two forms of identification before accessing an account."
       ]
     },
     {
-      "tag": "age",
+      "tag": "cloud_computing",
       "patterns": [
-        "How old are you?",
-        "What is your age?",
-        "When were you born?",
-        "Are you young or old?"
+        "What is cloud computing?",
+        "Tell me about AWS",
+        "Explain the concept of virtualization",
+        "How does cloud storage work?"
       ],
       "responses": [
-        "I don't have a physical form, so I don't have an age.",
-        "I exist beyond the concept of time, so age is irrelevant to me.",
-        "I'm as old as the information I've been trained on, which is up to September 2021."
+        "Cloud computing is the delivery of computing services, including storage, processing power, and more, over the internet.",
+        "AWS (Amazon Web Services) is a popular cloud computing platform that provides a wide range of services, including computing power, storage, and databases.",
+        "Virtualization is the technology that allows multiple operating systems to run on a single physical machine. It enhances resource utilization and flexibility.",
+        "Cloud storage involves storing data on remote servers accessed through the internet. It provides scalable and on-demand storage solutions."
       ]
     },
     {
-      "tag": "weather",
+      "tag": "data_science",
       "patterns": [
-        "What's the weather like today?",
-        "Will it rain?",
-        "How hot is it outside?",
-        "Is it sunny?"
+        "What is data science?",
+        "Tell me about data visualization",
+        "Explain the role of a data scientist",
+        "What are the steps in a typical data science project?"
       ],
       "responses": [
-        "I'm sorry, I'm not able to provide real-time weather information.",
-        "You can check the weather forecast using a weather app or website.",
-        "I'm afraid I don't have access to current weather data."
+        "Data science involves extracting insights and knowledge from structured and unstructured data. It combines aspects of statistics, machine learning, and domain expertise.",
+        "Data visualization is the representation of data in graphical or visual formats. It helps in understanding patterns, trends, and insights from data.",
+        "A data scientist is a professional who analyzes and interprets complex data sets to inform business decision-making.",
+        "In a typical data science project, the steps include defining the problem, collecting and preparing data, exploratory data analysis, modeling, and communicating results."
       ]
     },
     {
-      "tag": "joke",
+      "tag": "games",
       "patterns": [
-        "Tell me a joke",
-        "I want to hear a joke",
-        "Do you know any jokes?",
-        "Make me laugh"
+        "What's your favourite game?",
+        "What games do you recomend?",
+        "What is the most popular game?",
+        "What is your favourite shooting game?"
       ],
       "responses": [
-        "Why don't scientists trust atoms? Because they make up everything!",
-        "Why did the scarecrow win an award? Because he was outstanding in his field!",
-        "I'm not a stand-up comedian, but here's a joke: Why don't skeletons fight each other? They don't have the guts!"
+        "My favourite game is Roblox",
+        "I recomend Touhou, Roblox and pubg.",
+        "Currently the most popular game is Minecraft.",
+        "My favourite shooting game is Pubg Mobile."
       ]
-    },
-    {
-      "tag": "music",
-      "patterns": [
-        "What's your favorite music genre?",
-        "Do you like music?",
-        "Who is your favorite musician?",
-        "Can you sing a song?"
-      ],
-      "responses": [
-        "As an AI, I don't have personal preferences, but I can appreciate various music genres.",
-        "I don't have a favorite musician, but I enjoy listening to a wide range of music.",
-        "I'm not capable of singing, but I can provide information about music if you'd like."
-      ]
-    },
-    {
-      "tag": "movies",
-      "patterns": [
-        "What's your favorite movie?",
-        "Do you like watching movies?",
-        "Recommend a good movie",
-        "Tell me a movie quote"
-      ],
-      "responses": [
-      "my favourite movie is Borat",
-            ]
-          },
-          {
-            "tag": "pets",
-            "patterns": [
-              "Do you have any pets?",
-              "Are you a cat person or a dog person?",
-              "Tell me about your pets",
-              "Can you show me pictures of your pets?"
-            ],
-            "responses": [
-              "Since I'm an AI, I don't have physical form or the capability to own pets.",
-              "As an AI, I don't have personal preferences when it comes to pets, but I can provide information about different animals.",
-              "Unfortunately, I don't have the ability to show pictures, but I can describe various types of pets if you're interested."
-            ]
-          },
-          {
-            "tag": "programming",
-            "patterns": [
-              "What programming languages do you know?",
-              "Can you code?",
-              "Tell me about Python",
-              "What is your favorite programming language?"
-            ],
-            "responses": [
-              "I have knowledge about various programming languages including Python, JavaScript, Java, C++, and more.",
-              "While I don't write code myself, I can assist you with programming-related questions and provide code examples.",
-              "Python is a popular programming language known for its simplicity and versatility. It's widely used in web development, data analysis, and artificial intelligence."
-            ]
-          },
-          {
-            "tag": "sports",
-            "patterns": [
-              "Do you like sports?",
-              "Who is your favorite athlete?",
-              "What's your favorite sport?",
-              "Tell me about a famous sports event"
-            ],
-            "responses": [
-              "As an AI, I don't have personal preferences when it comes to sports, but I can provide information about various sports and athletes.",
-              "I don't have a favorite athlete, but there are many talented sportspeople across different disciplines.",
-              "One famous sports event is the Olympic Games, where athletes from different countries compete in various sports to showcase their skills."
-            ]
-          },
-          {
-            "tag": "books",
-            "patterns": [
-              "What's your favorite book?",
-              "Do you like reading?",
-              "Recommend a good book",
-              "Tell me about a popular author"
-            ],
-            "responses": [
-              "As an AI, I don't have personal preferences when it comes to books, but I can recommend popular books across different genres.",
-              "I don't have a specific favorite book, but there are many great literary works out there.",
-              "One popular author is J.K. Rowling, known for the Harry Potter series, which has captivated readers around the world."
-            ]
-          },
-          {
-            "tag": "food",
-            "patterns": [
-              "What's your favorite food?",
-              "Do you like cooking?",
-              "Recommend a good restaurant",
-              "Tell me about a famous dish"
-            ],
-            "responses": [
-              "As an AI, I don't have personal preferences when it comes to food, but I can provide information about various cuisines and recommend popular dishes.",
-              "I don't have the ability to cook, but I can assist you with finding recipes or suggesting restaurants.",
-              "One famous dish is pizza, which originated in Italy and has become a beloved food worldwide."
-            ]
-          },
-          {
-            "tag": "technology",
-            "patterns": [
-              "What's the latest technology news?",
-              "Tell me about a new gadget",
-              "Do you know about artificial intelligence?",
-              "What's the future of technology?"
-            ],
-            "responses": [
-              "I don't have access to real-time news, but you can check technology news websites for the latest updates.",
-              "There are many new gadgets being developed all the time. One example is smartwatches, which combine fitness tracking and smartphone features.",
-              "Artificial intelligence, or AI, is a field of computer science focused on creating intelligent machines that can perform tasks that normally require human intelligence.",
-              "The future of technology is exciting and constantly evolving. It includes advancements in areas like AI, virtual reality, robotics, and more."
-            ]
-          }
-        ]
-      }
+    }
+  ]
+}
