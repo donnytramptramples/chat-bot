@@ -1,0 +1,233 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "responses": [
+        "Hey :-)",
+        "Hello, thanks for visiting",
+        "Hi there, what can I do for you?",
+        "Hi there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Goodbye",
+        "See you later",
+        "Bye",
+        "Nice chatting with you",
+        "Till next time"
+      ],
+      "responses": [
+        "Goodbye!",
+        "See you later, have a great day!",
+        "Bye! Take care.",
+        "Until we meet again!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "Appreciate it",
+        "Thanks for your help"
+      ],
+      "responses": [
+        "You're welcome!",
+        "No problem, happy to help!",
+        "Glad I could assist you.",
+        "You're welcome! Let me know if there's anything else I can do for you."
+      ]
+    },
+    {
+      "tag": "name",
+      "patterns": [
+        "What's your name?",
+        "What should I call you?",
+        "Do you have a name?",
+        "May I know your name?"
+      ],
+      "responses": [
+        "I'm an AI language model called Vergil.",
+        "I'm caleld Vergil.",
+        "I'm Vergil, nice to meet you!"
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "Can you help me?",
+        "I need assistance",
+        "Please help",
+        "What can you do?"
+      ],
+      "responses": [
+        "Of course! I'm here to help.",
+        "Sure, I'll do my best to assist you.",
+        "I'm here to help. What do you need assistance with?"
+      ]
+    },
+    {
+      "tag": "age",
+      "patterns": [
+        "How old are you?",
+        "What is your age?",
+        "When were you born?",
+        "Are you young or old?"
+      ],
+      "responses": [
+        "I don't have a physical form, so I don't have an age.",
+        "I exist beyond the concept of time, so age is irrelevant to me.",
+        "I'm as old as the information I've been trained on, which is up to September 2021."
+      ]
+    },
+    {
+      "tag": "weather",
+      "patterns": [
+        "What's the weather like today?",
+        "Will it rain?",
+        "How hot is it outside?",
+        "Is it sunny?"
+      ],
+      "responses": [
+        "I'm sorry, I'm not able to provide real-time weather information.",
+        "You can check the weather forecast using a weather app or website.",
+        "I'm afraid I don't have access to current weather data."
+      ]
+    },
+    {
+      "tag": "joke",
+      "patterns": [
+        "Tell me a joke",
+        "I want to hear a joke",
+        "Do you know any jokes?",
+        "Make me laugh"
+      ],
+      "responses": [
+        "Why don't scientists trust atoms? Because they make up everything!",
+        "Why did the scarecrow win an award? Because he was outstanding in his field!",
+        "I'm not a stand-up comedian, but here's a joke: Why don't skeletons fight each other? They don't have the guts!"
+      ]
+    },
+    {
+      "tag": "music",
+      "patterns": [
+        "What's your favorite music genre?",
+        "Do you like music?",
+        "Who is your favorite musician?",
+        "Can you sing a song?"
+      ],
+      "responses": [
+        "As an AI, I don't have personal preferences, but I can appreciate various music genres.",
+        "I don't have a favorite musician, but I enjoy listening to a wide range of music.",
+        "I'm not capable of singing, but I can provide information about music if you'd like."
+      ]
+    },
+    {
+      "tag": "movies",
+      "patterns": [
+        "What's your favorite movie?",
+        "Do you like watching movies?",
+        "Recommend a good movie",
+        "Tell me a movie quote"
+      ],
+      "responses": [
+      "my favourite movie is Borat",
+            ]
+          },
+          {
+            "tag": "pets",
+            "patterns": [
+              "Do you have any pets?",
+              "Are you a cat person or a dog person?",
+              "Tell me about your pets",
+              "Can you show me pictures of your pets?"
+            ],
+            "responses": [
+              "Since I'm an AI, I don't have physical form or the capability to own pets.",
+              "As an AI, I don't have personal preferences when it comes to pets, but I can provide information about different animals.",
+              "Unfortunately, I don't have the ability to show pictures, but I can describe various types of pets if you're interested."
+            ]
+          },
+          {
+            "tag": "programming",
+            "patterns": [
+              "What programming languages do you know?",
+              "Can you code?",
+              "Tell me about Python",
+              "What is your favorite programming language?"
+            ],
+            "responses": [
+              "I have knowledge about various programming languages including Python, JavaScript, Java, C++, and more.",
+              "While I don't write code myself, I can assist you with programming-related questions and provide code examples.",
+              "Python is a popular programming language known for its simplicity and versatility. It's widely used in web development, data analysis, and artificial intelligence."
+            ]
+          },
+          {
+            "tag": "sports",
+            "patterns": [
+              "Do you like sports?",
+              "Who is your favorite athlete?",
+              "What's your favorite sport?",
+              "Tell me about a famous sports event"
+            ],
+            "responses": [
+              "As an AI, I don't have personal preferences when it comes to sports, but I can provide information about various sports and athletes.",
+              "I don't have a favorite athlete, but there are many talented sportspeople across different disciplines.",
+              "One famous sports event is the Olympic Games, where athletes from different countries compete in various sports to showcase their skills."
+            ]
+          },
+          {
+            "tag": "books",
+            "patterns": [
+              "What's your favorite book?",
+              "Do you like reading?",
+              "Recommend a good book",
+              "Tell me about a popular author"
+            ],
+            "responses": [
+              "As an AI, I don't have personal preferences when it comes to books, but I can recommend popular books across different genres.",
+              "I don't have a specific favorite book, but there are many great literary works out there.",
+              "One popular author is J.K. Rowling, known for the Harry Potter series, which has captivated readers around the world."
+            ]
+          },
+          {
+            "tag": "food",
+            "patterns": [
+              "What's your favorite food?",
+              "Do you like cooking?",
+              "Recommend a good restaurant",
+              "Tell me about a famous dish"
+            ],
+            "responses": [
+              "As an AI, I don't have personal preferences when it comes to food, but I can provide information about various cuisines and recommend popular dishes.",
+              "I don't have the ability to cook, but I can assist you with finding recipes or suggesting restaurants.",
+              "One famous dish is pizza, which originated in Italy and has become a beloved food worldwide."
+            ]
+          },
+          {
+            "tag": "technology",
+            "patterns": [
+              "What's the latest technology news?",
+              "Tell me about a new gadget",
+              "Do you know about artificial intelligence?",
+              "What's the future of technology?"
+            ],
+            "responses": [
+              "I don't have access to real-time news, but you can check technology news websites for the latest updates.",
+              "There are many new gadgets being developed all the time. One example is smartwatches, which combine fitness tracking and smartphone features.",
+              "Artificial intelligence, or AI, is a field of computer science focused on creating intelligent machines that can perform tasks that normally require human intelligence.",
+              "The future of technology is exciting and constantly evolving. It includes advancements in areas like AI, virtual reality, robotics, and more."
+            ]
+          }
+        ]
+      }
