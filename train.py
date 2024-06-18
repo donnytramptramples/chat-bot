@@ -1,129 +1,106 @@
-import numpy as np
-import random
-import json
+# train.py
 
 import torch
 import torch.nn as nn
+from torch import optim
 from torch.utils.data import Dataset, DataLoader
+from nltk_utils import build_vocab, sentence_to_indices
+from model import Encoder, Attention, Decoder
 
-from nltk_utils import bag_of_words, tokenize, stem
-from model import NeuralNet
+# Example data loading function, adjust as per your dialog.txt format
+def load_dialogs(filename):
+    contexts = []
+    questions = []
+    with open(filename, 'r', encoding='utf-8') as file:
+        for line in file:
+            context, question = line.strip().split('\t')
+            contexts.append(context)
+            questions.append(question)
+    return contexts, questions
 
-with open('intents.json', 'r') as f:
-    intents = json.load(f)
+# Define your custom dataset class
+class ConversationDataset(Dataset):
+    def __init__(self, filename):
+        self.contexts, self.questions = load_dialogs(filename)
+        self.vocab = build_vocab(self.contexts + self.questions)
 
-all_words = []
-tags = []
-xy = []
-# loop through each sentence in our intents patterns
-for intent in intents['intents']:
-    tag = intent['tag']
-    # add to tag list
-    tags.append(tag)
-    for pattern in intent['patterns']:
-        # tokenize each word in the sentence
-        w = tokenize(pattern)
-        # add to our words list
-        all_words.extend(w)
-        # add to xy pair
-        xy.append((w, tag))
-
-# stem and lower each word
-ignore_words = ['?', '.', '!']
-all_words = [stem(w) for w in all_words if w not in ignore_words]
-# remove duplicates and sort
-all_words = sorted(set(all_words))
-tags = sorted(set(tags))
-
-print(len(xy), "patterns")
-print(len(tags), "tags:", tags)
-print(len(all_words), "unique stemmed words:", all_words)
-
-# create training data
-X_train = []
-y_train = []
-for (pattern_sentence, tag) in xy:
-    # X: bag of words for each pattern_sentence
-    bag = bag_of_words(pattern_sentence, all_words)
-    X_train.append(bag)
-    # y: PyTorch CrossEntropyLoss needs only class labels, not one-hot
-    label = tags.index(tag)
-    y_train.append(label)
-
-X_train = np.array(X_train)
-y_train = np.array(y_train)
-
-# Hyper-parameters 
-num_epochs = 1000
-batch_size = 8
-learning_rate = 0.001
-input_size = len(X_train[0])
-hidden_size = 8
-output_size = len(tags)
-print(input_size, output_size)
-
-class ChatDataset(Dataset):
-
-    def __init__(self):
-        self.n_samples = len(X_train)
-        self.x_data = X_train
-        self.y_data = y_train
-
-    # support indexing such that dataset[i] can be used to get i-th sample
-    def __getitem__(self, index):
-        return self.x_data[index], self.y_data[index]
-
-    # we can call len(dataset) to return the size
     def __len__(self):
-        return self.n_samples
+        return len(self.contexts)
 
-dataset = ChatDataset()
-train_loader = DataLoader(dataset=dataset,
-                          batch_size=batch_size,
-                          shuffle=True,
-                          num_workers=0)
+    def __getitem__(self, idx):
+        context = self.contexts[idx]
+        question = self.questions[idx]
+        input_indices = sentence_to_indices(context, self.vocab, max_length=50)
+        target_indices = sentence_to_indices(question, self.vocab, max_length=50)
+        return torch.tensor(input_indices), torch.tensor(target_indices)
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# Set device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
+# Hyperparameters
+embed_size = 256
+hidden_size = 512
+learning_rate = 0.001
+epochs = 10
 
-# Loss and optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+# Initialize dataset and access its vocab attribute
+train_dataset = ConversationDataset('dialog.txt')
+vocab_size = len(train_dataset.vocab)
 
-# Train the model
-for epoch in range(num_epochs):
-    for (words, labels) in train_loader:
-        words = words.to(device)
-        labels = labels.to(dtype=torch.long).to(device)
+# Check if '<SOS>' token exists in vocab, otherwise handle the case
+sos_index = train_dataset.vocab.get('<SOS>', None)
+if sos_index is None:
+    raise ValueError("'<SOS>' token not found in the vocabulary!")
 
-        # Forward pass
-        outputs = model(words)
-        # if y would be one-hot, we must apply
-        # labels = torch.max(labels, 1)[1]
-        loss = criterion(outputs, labels)
+# Initialize model components
+encoder = Encoder(vocab_size, embed_size, hidden_size).to(device)
+attention = Attention(hidden_size).to(device)
+decoder = Decoder(hidden_size, vocab_size, attention).to(device)
 
-        # Backward and optimize
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+# Define loss function and optimizer
+criterion = nn.NLLLoss()
+optimizer = optim.Adam(list(encoder.parameters()) + list(attention.parameters()) + list(decoder.parameters()), lr=learning_rate)
 
-    if (epoch+1) % 100 == 0:
-        print (f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+# Dummy DataLoader, replace with your actual DataLoader
+train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
 
+def train_model(encoder, decoder, train_loader, device):
+    encoder.train()
+    decoder.train()
+    
+    for epoch in range(epochs):
+        print(f"Epoch {epoch + 1}/{epochs}")
+        total_loss = 0
+        for step, (input_ids, target_ids) in enumerate(train_loader):
+            optimizer.zero_grad()
 
-print(f'final loss: {loss.item():.4f}')
+            input_ids = input_ids.to(device)
+            target_ids = target_ids.to(device)
 
-data = {
-"model_state": model.state_dict(),
-"input_size": input_size,
-"hidden_size": hidden_size,
-"output_size": output_size,
-"all_words": all_words,
-"tags": tags
-}
+            encoder_outputs, encoder_hidden = encoder(input_ids)
+            decoder_hidden = encoder_hidden
 
-FILE = "data.pth"
-torch.save(data, FILE)
+            # Handle case where <SOS> token is not found
+            decoder_input = torch.tensor([[sos_index]] * input_ids.size(0), device=device)
+            if sos_index is None:
+                raise ValueError("'<SOS>' token not found in the vocabulary!")
 
-print(f'training complete. file saved to {FILE}')
+            max_target_length = target_ids.size(1)
+            loss = 0
+            for t in range(max_target_length):
+                decoder_output, decoder_hidden, decoder_attention = decoder(
+                    decoder_input, decoder_hidden, encoder_outputs)
+
+                loss += criterion(decoder_output.squeeze(1), target_ids[:, t])
+                decoder_input = target_ids[:, t].unsqueeze(1)
+
+            total_loss += loss.item() / max_target_length
+            loss.backward()
+            optimizer.step()
+
+            # Print debugging information
+            print(f"Batch {step + 1}/{len(train_loader)}, Loss: {loss.item() / max_target_length}")
+
+        print(f"Average Train Loss: {total_loss / len(train_loader)}")
+
+train_model(encoder, decoder, train_loader, device)

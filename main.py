@@ -1,52 +1,59 @@
-import random
 import json
-
 import torch
+from model import Encoder, Attention, Decoder
+from nltk_utils import tokenize, stem, sentence_to_indices
 
-from model import NeuralNet
-from nltk_utils import bag_of_words, tokenize
+def generate_response(encoder, decoder, input_sentence, vocab, device, max_length=50):
+    input_indices = sentence_to_indices(input_sentence, vocab, max_length)
+    input_tensor = torch.tensor([input_indices]).to(device)
+    
+    encoder.eval()
+    decoder.eval()
+    with torch.no_grad():
+        encoder_outputs, encoder_hidden = encoder(input_tensor)
+        decoder_hidden = encoder_hidden
+        decoder_input = torch.tensor([[0]], device=device)  # Start token index
+        
+        decoded_words = []
+        for di in range(max_length):
+            decoder_output, decoder_hidden, decoder_attention = decoder(decoder_input, decoder_hidden, encoder_outputs)
+            topv, topi = decoder_output.topk(1)
+            decoder_input = topi.squeeze().detach()  # detach from history as input
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            if topi.item() == 1:  # End token
+                break
 
-with open('intents.json', 'r') as json_data:
-    intents = json.load(json_data)
+            decoded_words.append(vocab[topi.item()])
 
-FILE = "data.pth"
-data = torch.load(FILE)
+        output_sentence = ' '.join(decoded_words)
+    
+    return output_sentence
 
-input_size = data["input_size"]
-hidden_size = data["hidden_size"]
-output_size = data["output_size"]
-all_words = data['all_words']
-tags = data['tags']
-model_state = data["model_state"]
+if __name__ == "__main__":
+    print("Loading the model and vocabulary for interaction...")
+    
+    # Load vocabulary from JSON file
+    with open('vocab.json', 'r') as f:
+        vocab = json.load(f)
+    
+    # Initialize the encoder and decoder using the loaded vocabulary size
+    embed_size = 128
+    hidden_size = 256
+    encoder = Encoder(len(vocab), embed_size, hidden_size)
+    attention = Attention(hidden_size)
+    decoder = Decoder(hidden_size, len(vocab), attention)
 
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
-
-bot_name = "Vergil"
-print("Let's chat! (type 'quit' to exit)")
-while True:
-    sentence = input("You: ")
-    if sentence == "quit":
-        break
-
-    sentence = tokenize(sentence)
-    X = bag_of_words(sentence, all_words)
-    X = X.reshape(1, X.shape[0])
-    X = torch.from_numpy(X).to(device)
-
-    output = model(X)
-    _, predicted = torch.max(output, dim=1)
-
-    tag = tags[predicted.item()]
-
-    probs = torch.softmax(output, dim=1)
-    prob = probs[0][predicted.item()]
-    if prob.item() > 0.75:
-        for intent in intents['intents']:
-            if tag == intent["tag"]:
-                print(f"{bot_name}: {random.choice(intent['responses'])}")
-    else:
-        print(f"{bot_name}: I do not understand...")
+    # Move encoder and decoder to appropriate device (GPU or CPU)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    encoder.load_state_dict(torch.load('encoder.pth', map_location=device))
+    decoder.load_state_dict(torch.load('decoder.pth', map_location=device))
+    encoder.to(device)
+    decoder.to(device)
+    
+    print("Chatbot is ready to interact! Type 'quit' to exit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'quit':
+            break
+        response = generate_response(encoder, decoder, user_input, vocab, device)
+        print(f"Bot: {response}")
