@@ -1,43 +1,24 @@
-import numpy as np
 import nltk
-# nltk.download('punkt')
-from nltk.stem.porter import PorterStemmer
-stemmer = PorterStemmer()
+import torch
+from collections import Counter
 
-def tokenize(sentence):
-    """
-    split sentence into array of words/tokens
-    a token can be a word or punctuation character, or number
-    """
-    return nltk.word_tokenize(sentence)
+# Function to build vocabulary
+def build_vocab(data):
+    all_words = []
+    for sentence in data:
+        all_words.extend(sentence.split())
+    word_counts = Counter(all_words)
+    sorted_words = sorted(word_counts, key=word_counts.get, reverse=True)
 
+    # Insert special tokens in the vocabulary
+    vocab = {'<PAD>': 0, '<SOS>': 1, '<EOS>': 2, '<UNK>': 3}  # Define special tokens
+    vocab.update({word: idx + 4 for idx, word in enumerate(sorted_words)})  # Start index for words
 
-def stem(word):
-    """
-    stemming = find the root form of the word
-    examples:
-    words = ["organize", "organizes", "organizing"]
-    words = [stem(w) for w in words]
-    -> ["organ", "organ", "organ"]
-    """
-    return stemmer.stem(word.lower())
+    return vocab
 
-
-def bag_of_words(tokenized_sentence, words):
-    """
-    return bag of words array:
-    1 for each known word that exists in the sentence, 0 otherwise
-    example:
-    sentence = ["hello", "how", "are", "you"]
-    words = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
-    bog   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
-    """
-    # stem each word
-    sentence_words = [stem(word) for word in tokenized_sentence]
-    # initialize bag with 0 for each word
-    bag = np.zeros(len(words), dtype=np.float32)
-    for idx, w in enumerate(words):
-        if w in sentence_words: 
-            bag[idx] = 1
-
-    return bag
+# Function to convert sentence to indices based on vocabulary
+def sentence_to_indices(sentence, vocab, max_length):
+    tokenized = nltk.word_tokenize(sentence.lower())
+    indices = [vocab[token] if token in vocab else vocab['<UNK>'] for token in tokenized]
+    indices = indices[:max_length] + [vocab['<PAD>']] * (max_length - len(indices))
+    return indices
